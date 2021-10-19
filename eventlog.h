@@ -11,10 +11,10 @@
 #define SOURCE_NAME _T("ГШ Покров")
 
 extern "C" EVENTLOG_DLLEXPORT WORD install_eventlog_source(
-    const std::string a_name, const std::string a_exe_path);
+    const char* a_name, const char* a_exe_path);
 
 extern "C" EVENTLOG_DLLEXPORT WORD send_eventlog_message(
-    const std::string a_msg, const WORD a_type, const std::string a_name);
+    const char* a_msg, const WORD a_type, const char* a_name);
 
 extern "C" EVENTLOG_DLLEXPORT WORD uninstall_eventlog_source(
-    const std::string a_name);
+    const char* a_name);

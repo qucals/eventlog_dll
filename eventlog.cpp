@@ -41,10 +41,10 @@ std::wstring utf8_to_utf16(const std::string a_str)
 }
 
 WORD install_eventlog_source(
-    const std::string a_name, const std::string a_exe_path)
+    const char* a_name, const char* a_exe_path)
 {
-    std::wstring w_name = utf8_to_utf16(a_name);
-    std::wstring w_exe_path = utf8_to_utf16(a_exe_path);
+    std::wstring w_name = utf8_to_utf16(std::string(a_name));
+    std::wstring w_exe_path = utf8_to_utf16(std::string(a_exe_path));
 
     const std::wstring key_path(L"SYSTEM\\CurrentControlSet\\Services\\"
         "EventLog\\ГШ Покров\\" + w_name);
@@ -96,10 +96,10 @@ WORD install_eventlog_source(
 }
 
 WORD send_eventlog_message(
-    const std::string a_msg, const WORD a_type, const std::string a_name)
+    const char* a_msg, const WORD a_type, const char* a_name)
 {
-    std::wstring w_msg = utf8_to_utf16(a_msg);
-    std::wstring w_name = utf8_to_utf16(a_name);
+    std::wstring w_msg = utf8_to_utf16(std::string(a_msg));
+    std::wstring w_name = utf8_to_utf16(std::string(a_name));
 
     DWORD event_id;
 
@@ -145,16 +145,18 @@ WORD send_eventlog_message(
 }
 
 WORD uninstall_eventlog_source(
-    const std::string a_name)
+    const char* a_name)
 {
-    std::wstring w_name = utf8_to_utf16(a_name);
+    std::wstring w_name = utf8_to_utf16(std::string(a_name));
 
     const std::wstring key_path(L"SYSTEM\\CurrentControlSet\\Services\\"
-        "EventLog\\Application\\" + w_name);
+        "EventLog\\ГШ Покров\\" + w_name);
     
     DWORD last_error = RegDeleteKey(HKEY_LOCAL_MACHINE, key_path.c_str());
     
     if (ERROR_SUCCESS != last_error) {
         return last_error;
     }
+
+    return 0;
 }
